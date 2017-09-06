@@ -4,7 +4,7 @@
 /*jshint esversion: 6 */
 $("#container").hide();
 
-var arr = ["doctoretrill", "acesg", "nivoLcMLoL", "DreadJoker99"];
+var arr = ["doctoretrill", "acesg", "nivoLcMLoL", "DreadJoker99", "TheRealQF", "cycloneslol", "MikesArsenal" ];
 var txt, txt2, txt3;
 var gamer = [];
 
