@@ -4,7 +4,10 @@
 /*jshint esversion: 6 */
 $("#container").hide();
 
-var arr = ["doctoretrill", "acesg", "nivoLcMLoL", "DreadJoker99", "TheRealQF", "cycloneslol", "MikesArsenal" ];
+var arr = ["doctoretrill", "acesg", "nivoLcMLoL", "DreadJoker99", "TheRealQF", "cycloneslol"];
+
+var arr2 = ["img/roster/trill.png", "img/roster/acesg.jpg", "img/roster/mclovin.jpg", "img/roster/dread.jpg", "img/roster/jon.jpg", "img/roster/cole.jpg"];
+
 var txt, txt2, txt3;
 var gamer = [];
 
@@ -115,8 +118,6 @@ function Streamer(name, logo, online, status, viewers) {
 
 var leng = arr.length;
 for (let i = 0; i < leng; i++) {
-  // var jqxhr = $.getJSON('https://wind-bow.gomix.me/twitch-api/channels/' + arr[i] + '?callback=?');
-  // var jqxhr = $.getJSON('https://api.twitch.tv/kraken/channel/' + arr[i]);
 
   $.ajax({
     type: 'GET',
@@ -124,14 +125,13 @@ for (let i = 0; i < leng; i++) {
     headers: {
       'Client-ID': 'dxr9emmd17s6vm7uweiztik0k5wsyu'
     },
-    success: function(data) {
+    success: function (data) {
       everythingOK(data, i);
     },
-    fail: function(err)
-    {
+    fail: function (err) {
       somethingWrong(1);
     }
-   });
+  });
 
 
 
@@ -147,8 +147,6 @@ for (let i = 0; i < leng; i++) {
 function everythingOK(data, i) {
   // alert(JSON.stringify(data));
   gamer[i] = new Streamer(data.display_name, data.logo, false);
-  // var jqxhr2 = $.getJSON('https://api.twitch.tv/kraken/channel/streams/' + arr[i] );
-
 
   $.ajax({
     type: 'GET',
@@ -156,8 +154,8 @@ function everythingOK(data, i) {
     headers: {
       'Client-ID': 'dxr9emmd17s6vm7uweiztik0k5wsyu'
     },
-    success: function(data) {
-      
+    success: function (data) {
+
 
       if (data.stream !== null) {
         console.log(data.stream.channel.status);
@@ -180,18 +178,48 @@ function everythingOK(data, i) {
       } else {
         $("#container").append(divs);
       }
-   
+
+
+
       var oImg = document.createElement("img");
       if (gamer[i].logo !== null) {
-        oImg.setAttribute('src', gamer[i].logo);
+        oImg.setAttribute('src', arr2[i]);
         oImg.setAttribute('class', "images");
         $("#divs" + i).append(oImg);
       } else {
         oImg.setAttribute('src', "http://vignette1.wikia.nocookie.net/leagueoflegends/images/1/12/League_of_Legends_Icon.png/revision/latest?cb=20150402234343");
         oImg.setAttribute('class', "defaultImg");
       }
+
+      
+      var oIco = document.createElement("img");
+      if (gamer[i].logo !== null) {
+        oIco.setAttribute('src', "img/roster/5-1.png");
+        oIco.setAttribute('class', "imageRank  hidden-sm-up");
+      } else {
+        oIco.setAttribute('src', "img/roster/5-1.png");
+      }
+
+      var oIco2 = document.createElement("img");
+      if (gamer[i].logo !== null) {
+        oIco2.setAttribute('src', "img/roster/5-1.png");
+        oIco2.setAttribute('class', "imageRank2 hidden-md-down");
+      } else {
+        oIc2o.setAttribute('src', "img/roster/5-1.png");
+      }
+
+       var oh1 = '<h3 style="    font-size: 1.2em;line-height: 1; margin-bottom: -3px; padding-top: 2px;"> Varsity </h3>'
+       var oh2 = '<h3 style="font-size: 1.2em; padding-left:8px; "> Support </h3>'
+
+       $("#divs" + i).append(oIco2);
+       $("#divs" + i).append(oh1);$("#divs" + i).append(oh2);
+      
+      $("#divs" + i).append(oIco);
       $("#divs" + i).append(oImg);
-   console.log(gamer[i].online)
+    
+      console.log(gamer[i].online)
+
+
       if (gamer[i].online == true) {
         txt = gamer[i].status;
         txt2 = '<span id="green">&#x2022;</span>' + '<a href="https://www.twitch.tv/' + gamer[i].name + '" target="_blank">' + gamer[i].name + '</a>';
@@ -200,38 +228,38 @@ function everythingOK(data, i) {
         txt = " offline";
         txt2 = '<span id="red">&#x2022;</span>' + '<a href="https://www.twitch.tv/' + gamer[i].name + '" target="_blank">' + gamer[i].name + '</a>';
       }
-   
+
       var content = document.createElement('div');
       var gamerName = document.createElement('div');
       var viewers = document.createElement('div');
       content.setAttribute('class', 'content');
-      gamerName.setAttribute('class', "gamerName");
+      gamerName.setAttribute('class', "gamerName hidden-md-down");
       viewers.setAttribute('class', "viewers");
       gamerName.setAttribute('id', "gamerName" + i);
       content.setAttribute('id', 'content' + i);
       viewers.setAttribute('id', "viewers" + i);
-   
+
       $("#divs" + i).append(gamerName);
       $("#divs" + i).append(content);
       $("#content" + i).text(txt);
       $("#gamerName" + i).html(txt2);
       $("#content" + i).append(viewers);
       $("#viewers" + i).text(txt3);
-   
+
       var lastDiv = arr.length - 1;
       if (i == lastDiv) {
         $("#container").show();
         $(".showbox").hide();
         menuActivate();
       }
-   
-     // jqxhr2.done(function (data) {
-     //   if (data.stream !== null) {
-     //     gamer[i].online = true;
-     //     gamer[i].status = data.stream.channel.status;
-     //     gamer[i].viewers = data.stream.viewers;
-     //   }
-     // });
+
+      // jqxhr2.done(function (data) {
+      //   if (data.stream !== null) {
+      //     gamer[i].online = true;
+      //     gamer[i].status = data.stream.channel.status;
+      //     gamer[i].viewers = data.stream.viewers;
+      //   }
+      // });
 
 
     }
@@ -239,11 +267,11 @@ function everythingOK(data, i) {
 
 
 
-   });
+  });
 
 
 
- 
+
 } //end of everythingOk
 
 function somethingWrong(nr) { alert("fail" + nr); }
